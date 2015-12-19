@@ -1,0 +1,10 @@
+{ 
+  "name": "qcdirect",
+  "version": "1.0.0",
+  "repo": "cho45/qcdirect",
+  "dependencies": {
+    "cho45/avr-utils": "*"
+  },
+  "install": "make"
+}
+
