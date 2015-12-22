@@ -30,6 +30,6 @@ static inline void IO(volatile uint8_t& reg, Rest... args) {
 
 template<class T>
 static inline bool IO(volatile uint8_t& reg, T pin) {
-	return reg & pin;
+	return reg & (1<<pin);
 }
 

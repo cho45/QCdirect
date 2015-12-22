@@ -19,9 +19,14 @@ const uint8_t D_PLUS_0V6 = PB1;
 const uint8_t D_MINUS_3V3 = PB3;
 const uint8_t D_MINUS_0V6 = PB2;
 
+const uint8_t VOLTAGE_SELECT = PB4;
+
 
 int main(void) {
-	EVoltage voltage = E_12V;
+	EVoltage voltage = E_5V;
+
+	IO(DDRB, VOLTAGE_SELECT, 0);
+	IO(PORTB, VOLTAGE_SELECT, 1);
 
 	/** init with hi-z (this is redundant)
 	IO(DDRB,
@@ -40,6 +45,14 @@ int main(void) {
 
 	// wait until stable connection
 	_delay_ms(1000);
+
+	if (!IO(PINB, VOLTAGE_SELECT)) {
+		// VOLTAGE_SELECT ON
+		voltage = E_12V;
+	} else {
+		// VOLTAGE_SELECT OFF
+		voltage = E_9V;
+	}
 
 	// reset line (D+ = 0V, D- = 0V)
 	IO(DDRB,
@@ -69,12 +82,12 @@ int main(void) {
 			break;
 		case E_9V:
 			// D+ = 3.3V, D- = 0.6V
-			IO(PORTB, D_MINUS_3V3, 1);
+			IO(PORTB, D_PLUS_3V3, 1);
 			IO(DDRB,
 				D_PLUS_3V3, 1,
 				D_PLUS_0V6, 0
 			);
-			IO(PORTB, D_MINUS_0V6, 0);
+			IO(PORTB, D_PLUS_0V6, 0);
 
 			IO(PORTB, D_MINUS_0V6, 1);
 			break;

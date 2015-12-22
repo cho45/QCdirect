@@ -4,8 +4,7 @@ CLOCK      = 9600000
 PROGRAMMER = -c avrispmkII -P usb
 OBJECTS    = main.o
 # Use http://www.engbedded.com/fusecalc
-# Reset Disabled (Enable PB5 as i/o pin)
-FUSES      = -U lfuse:w:0x7a:m -U hfuse:w:0xfe:m
+FUSES      = -U lfuse:w:0x7a:m -U hfuse:w:0xff:m
 
 
 ifeq ($(RELEASE),1)
@@ -14,7 +13,7 @@ else
 COMPILE_OPT = -Os -g3 -gdwarf-2
 endif
 
-AVRDUDE = avrdude $(PROGRAMMER) -p $(DEVICE)
+AVRDUDE = avrdude $(PROGRAMMER) -p t13
 COMPILE = avr-gcc -Ideps -Wl,--relax,--gc-sections -Wall $(COMPILE_OPT) -DF_CPU=$(CLOCK) -mmcu=$(DEVICE) -fdata-sections -ffunction-sections -ffreestanding -fno-schedule-insns2 -mcall-prologues -fno-tree-scev-cprop -fno-split-wide-types
 CXXFLAGS_STD = -std=c++14
 
